@@ -1,4 +1,4 @@
-# Compilar APK Jarvis — WebView
+# Compilar APK Daniel — WebView
 
 ## Pre-requisitos
 - Android Studio Hedgehog (2023.1) o superior
@@ -6,7 +6,7 @@
 
 ## Pasos
 
-1. Abrir Android Studio → **Open** → seleccionar esta carpeta `JarvisApp/`
+1. Abrir Android Studio → **Open** → seleccionar esta carpeta `JarvisApp/` (renombrar a `DanielApp/` es opcional)
 2. Esperar a que Gradle sincronice (~2 min primera vez)
 3. Editar la IP del servidor en:
    `app/src/main/java/com/jarvis/app/MainActivity.kt`

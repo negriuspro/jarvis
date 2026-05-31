@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 import json
 import logging
 import os
@@ -11,7 +11,7 @@ from .memory import get_context as _mem_context
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-log = logging.getLogger("jarvis.ai")
+log = logging.getLogger("daniel.ai")
 
 # ─── Conversation history ─────────────────────────────────────────────────────
 _history: list[dict] = []

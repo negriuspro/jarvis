@@ -1,11 +1,11 @@
-import base64
+﻿import base64
 import io
 import logging
 import os
 
 from groq import AsyncGroq
 
-log = logging.getLogger("jarvis.vision")
+log = logging.getLogger("daniel.vision")
 
 _client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY", ""))
 _MODEL  = "llama-3.2-11b-vision-preview"

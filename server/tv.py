@@ -1,9 +1,9 @@
-import logging
+﻿import logging
 import threading
 
 import pychromecast
 
-log = logging.getLogger("jarvis.tv")
+log = logging.getLogger("daniel.tv")
 
 # Nombres posibles de la TV en la red (insensible a mayúsculas)
 _TV_NAMES = {"tv de dormitorio", "dormitorio"}

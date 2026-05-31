@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 import logging
 import os
 
@@ -6,7 +6,7 @@ import psutil
 
 from .smarthome import control_device, get_device_status
 
-log = logging.getLogger("jarvis.battery")
+log = logging.getLogger("daniel.battery")
 
 _LOW  = int(os.environ.get("BATTERY_LOW",  "20"))
 _HIGH = int(os.environ.get("BATTERY_HIGH", "80"))

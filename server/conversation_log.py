@@ -4,22 +4,24 @@ from datetime import datetime
 from pathlib import Path
 from threading import Lock
 
-log = logging.getLogger("jarvis.conv_log")
+log = logging.getLogger("daniel.conv_log")
 
 _PATH = Path(__file__).parent.parent / "data" / "conversations.jsonl"
 _lock = Lock()
 
 
-def log_conversation(user: str, jarvis: str) -> None:
+def log_conversation(user: str, daniel: str) -> None:
     _PATH.parent.mkdir(parents=True, exist_ok=True)
     entry = {
         "ts":     datetime.now().isoformat(timespec="seconds"),
         "user":   user,
-        "jarvis": jarvis,
+        "daniel": daniel,
     }
     with _lock:
         with _PATH.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
 
 
 def get_history(n: int = 100) -> list[dict]:

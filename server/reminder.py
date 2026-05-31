@@ -1,8 +1,8 @@
-import logging
+﻿import logging
 import threading
 from datetime import datetime, timedelta
 
-log = logging.getLogger("jarvis.reminder")
+log = logging.getLogger("daniel.reminder")
 
 _pending: list[dict] = []
 _lock = threading.Lock()

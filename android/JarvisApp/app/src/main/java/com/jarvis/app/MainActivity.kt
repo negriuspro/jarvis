@@ -1,4 +1,4 @@
-package com.jarvis.app
+package com.daniel.app
 
 import android.Manifest
 import android.annotation.SuppressLint

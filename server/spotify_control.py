@@ -1,8 +1,8 @@
-"""Spotify control via spotipy Web API."""
+﻿"""Spotify control via spotipy Web API."""
 import logging
 import os
 
-log = logging.getLogger("jarvis.spotify")
+log = logging.getLogger("daniel.spotify")
 
 
 def _client():

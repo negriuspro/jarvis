@@ -1,4 +1,4 @@
-"""
+﻿"""
 TTS (Text-to-Speech) para Jarvis.
 
 En modo servidor headless (Ubuntu sin audio), el TTS se deshabilita
@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-log = logging.getLogger("jarvis.tts")
+log = logging.getLogger("daniel.tts")
 
 _q: queue.Queue = queue.Queue()
 

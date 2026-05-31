@@ -3,13 +3,13 @@ import os
 
 from groq import AsyncGroq
 
-log = logging.getLogger("jarvis.stt")
+log = logging.getLogger("daniel.stt")
 
 _client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY", ""))
 
 
 _PROMPT = (
-    "Jarvis, apaga, enciende, enchufe, bombillo, lámpara, aire acondicionado, "
+    "Daniel, apaga, enciende, enchufe, bombillo, lámpara, aire acondicionado, "
     "abre, cierra, sube, baja, volumen, YouTube, Spotify, Discord, Chrome, "
     "calculadora, notepad, escritorio, descargas, documentos, música, "
     "qué hora es, qué fecha es, busca, recuerda, recuérdame, pantalla, "

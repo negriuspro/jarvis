@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace         'com.jarvis.app'
+    namespace         'com.daniel.app'
     compileSdk        34
 
     defaultConfig {
-        applicationId   "com.jarvis.app"
+        applicationId   "com.daniel.app"
         minSdk          19
         targetSdk       34
         versionCode     1

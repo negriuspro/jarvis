@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Jarvis — Deploy inicial en Ubuntu Server
+# Daniel — Deploy inicial en Ubuntu Server
 # Ejecutar como usuario con permisos Docker (no root).
 # Uso: bash deploy.sh
 # =============================================================================
 set -euo pipefail
 
-REPO_URL="https://github.com/negriuspro/jarvis.git"
-INSTALL_DIR="$HOME/jarvis"
+REPO_URL="https://github.com/negriuspro/daniel.git"
+INSTALL_DIR="$HOME/daniel"
 ENV_FILE="$INSTALL_DIR/.env"
 
 echo "=============================================="
-echo "  Jarvis — Deploy producción Ubuntu Server"
+echo "  Daniel — Deploy producción Ubuntu Server"
 echo "=============================================="
 
 # ── 1. Dependencias del sistema ───────────────────────────────────────────────
@@ -45,7 +45,7 @@ if [ ! -f "$ENV_FILE" ]; then
     echo ""
     echo "Variables requeridas:"
     echo "  GROQ_API_KEY          — tu API key de Groq"
-    echo "  JARVIS_ADMIN_TOKEN    — token secreto para la API de Docker"
+    echo "  DANIEL_ADMIN_TOKEN    — token secreto para la API de Docker"
     echo "  TUYA_ACCESS_ID        — credenciales Tuya (si usas Smart Home)"
     echo "  TUYA_ACCESS_SECRET"
     echo ""
@@ -76,6 +76,6 @@ docker compose ps
 
 echo ""
 echo "=============================================="
-echo "  Jarvis desplegado correctamente"
+echo "  Daniel desplegado correctamente"
 echo "  Accede en: http://$(hostname -I | awk '{print $1}'):${APP_PORT:-3000}"
 echo "=============================================="

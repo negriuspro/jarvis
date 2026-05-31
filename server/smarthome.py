@@ -1,11 +1,11 @@
-import json
+﻿import json
 import logging
 import os
 from pathlib import Path
 
 import tinytuya
 
-log = logging.getLogger("jarvis.smarthome")
+log = logging.getLogger("daniel.smarthome")
 
 _DEVICES_JSON = Path(__file__).parent.parent / "devices.json"
 _devices_cache: list[dict] | None = None

@@ -1,10 +1,10 @@
-"""Weather via Open-Meteo (free, no API key needed)."""
+﻿"""Weather via Open-Meteo (free, no API key needed)."""
 import asyncio
 import logging
 
 import httpx
 
-log = logging.getLogger("jarvis.weather")
+log = logging.getLogger("daniel.weather")
 
 _GEO_URL = "https://geocoding-api.open-meteo.com/v1/search"
 _WEATHER_URL = "https://api.open-meteo.com/v1/forecast"

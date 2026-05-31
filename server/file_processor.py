@@ -1,4 +1,4 @@
-"""
+﻿"""
 Unified file processor — uses Gemini Vision for images/video/docs,
 pdfplumber for PDF text extraction, pandas for data files.
 No ffmpeg required.
@@ -8,7 +8,7 @@ import mimetypes
 import os
 from pathlib import Path
 
-log = logging.getLogger("jarvis.files")
+log = logging.getLogger("daniel.files")
 
 _GEMINI_KEY = lambda: os.environ.get("GEMINI_API_KEY", "")
 _GROQ_KEY = lambda: os.environ.get("GROQ_API_KEY", "")

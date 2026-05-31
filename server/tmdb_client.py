@@ -1,10 +1,10 @@
-"""TMDB client — movies and TV shows search."""
+﻿"""TMDB client — movies and TV shows search."""
 import logging
 import os
 
 import httpx
 
-log = logging.getLogger("jarvis.tmdb")
+log = logging.getLogger("daniel.tmdb")
 
 _BASE = "https://api.themoviedb.org/3"
 

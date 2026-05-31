@@ -1,11 +1,11 @@
-import asyncio
+﻿import asyncio
 import io
 import logging
 import wave
 
 import numpy as np
 
-log = logging.getLogger("jarvis.mic")
+log = logging.getLogger("daniel.mic")
 
 SAMPLE_RATE   = 16000
 SILENCE_RMS   = 350       # below this = silence

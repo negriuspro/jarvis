@@ -1,10 +1,10 @@
 @echo off
-title JARVIS
+title DANIEL
 cd /d "%~dp0"
 
 echo.
 echo  =========================================
-echo     J A R V I S  Assistant  v2.0  [AI]
+echo     D A N I E L  Assistant  v2.0  [AI]
 echo  =========================================
 echo.
 

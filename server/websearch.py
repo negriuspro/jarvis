@@ -1,9 +1,9 @@
-import logging
+﻿import logging
 import os
 
 from groq import AsyncGroq
 
-log = logging.getLogger("jarvis.search")
+log = logging.getLogger("daniel.search")
 
 _client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY", ""))
 

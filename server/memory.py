@@ -1,10 +1,10 @@
-import json
+﻿import json
 import logging
 from datetime import datetime
 from pathlib import Path
 from threading import Lock
 
-log = logging.getLogger("jarvis.memory")
+log = logging.getLogger("daniel.memory")
 
 _PATH = Path(__file__).parent.parent / "data" / "memory.json"
 _lock = Lock()

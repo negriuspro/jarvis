@@ -1,4 +1,4 @@
-# Jarvis Docker Deployment
+﻿# Daniel Docker Deployment
 
 This project is configured for Docker Engine running inside WSL Ubuntu, without Docker Desktop.
 
@@ -12,7 +12,7 @@ The Docker socket is the only host mount in the backend:
 /var/run/docker.sock:/var/run/docker.sock
 ```
 
-The frontend never talks to Docker directly. The backend exposes only list, inspect, start, stop, restart, logs, and metrics endpoints under `/api/docker`. Those endpoints require `X-Jarvis-Admin-Token`; if `JARVIS_ADMIN_TOKEN` is empty, Docker controls are disabled.
+The frontend never talks to Docker directly. The backend exposes only list, inspect, start, stop, restart, logs, and metrics endpoints under `/api/docker`. Those endpoints require `X-Daniel-Admin-Token`; if `DANIEL_ADMIN_TOKEN` is empty, Docker controls are disabled.
 
 ## First Setup
 
@@ -30,7 +30,7 @@ Set at least:
 APP_HOST=0.0.0.0
 APP_PORT=3000
 GROQ_API_KEY=your_key
-JARVIS_ADMIN_TOKEN=a_long_random_admin_token
+DANIEL_ADMIN_TOKEN=a_long_random_admin_token
 ```
 
 ## Build
@@ -148,7 +148,7 @@ Modern WSL forwards ports bound to `0.0.0.0` to Windows. If LAN devices still ca
 $wslIp = wsl hostname -I
 $wslIp = $wslIp.Trim().Split(" ")[0]
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=3000 connectaddress=$wslIp connectport=3000
-New-NetFirewallRule -DisplayName "Jarvis 3000" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3000
+New-NetFirewallRule -DisplayName "Daniel 3000" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3000
 ```
 
 Remove the portproxy if needed:

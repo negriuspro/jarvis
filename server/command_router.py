@@ -7,7 +7,7 @@ def route_command(text: str) -> str:
         return "No escuché ningún comando."
 
     clean = text.lower().strip()
-    if clean.startswith("jarvis"):
+    if clean.startswith("daniel"):
         clean = clean[6:].strip()
 
     for module in COMMAND_MODULES:

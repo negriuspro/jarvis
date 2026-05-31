@@ -1,4 +1,4 @@
-"""
+﻿"""
 Jarvis tool executor — Linux/server-mode compatible.
 
 PC-only features (key_press, open_app, volume control) return an informational
@@ -13,7 +13,7 @@ import logging
 import urllib.parse
 from pathlib import Path
 
-log = logging.getLogger("jarvis.tools")
+log = logging.getLogger("daniel.tools")
 
 # ─── Tool schemas (Groq / OpenAI function-calling format) ────────────────────
 
@@ -225,7 +225,7 @@ def _system_control(command: str, value: str = "") -> str:
 def _take_screenshot() -> str:
     try:
         from PIL import ImageGrab
-        path = Path("/tmp") / f"jarvis_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+        path = Path("/tmp") / f"daniel_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
         img = ImageGrab.grab()
         img.save(str(path))
         return f"Captura guardada en: {path.name}"

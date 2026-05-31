@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════════
-   JARVIS NEURAL CONSCIOUSNESS v1 — BACKUP
+   DANIEL NEURAL CONSCIOUSNESS v1 — BACKUP
    Para volver a esta versión: en index.html cambia
    <script src="/app.js"> por:
    <script src="/visual_sphere.js">

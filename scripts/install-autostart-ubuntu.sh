@@ -27,7 +27,7 @@ fi
 cat > "$SERVICE_FILE" <<EOF
 [Unit]
 Description=Daniel AI Voice Assistant
-Documentation=https://github.com/negriuspro/jarvis
+Documentation=https://github.com/negriuspro/daniel
 After=network-online.target docker.service
 Wants=network-online.target
 Requires=docker.service

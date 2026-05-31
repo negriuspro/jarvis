@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 import os
 import threading
 from pathlib import Path
@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-log = logging.getLogger("jarvis.google_home")
+log = logging.getLogger("daniel.google_home")
 
 _GH_HOST = os.environ.get("GOOGLE_HOME_HOST", "")
 _GH_PORT = int(os.environ.get("GOOGLE_HOME_PORT", "8009"))

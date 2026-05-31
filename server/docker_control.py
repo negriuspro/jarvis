@@ -12,11 +12,11 @@ _ALLOWED_STATES = {"created", "restarting", "running", "removing", "paused", "ex
 _DEFAULT_LOG_LINES = int(os.environ.get("DOCKER_LOG_LINES", "200"))
 
 
-def _require_admin_token(x_jarvis_admin_token: str | None = Header(default=None)) -> None:
-    expected = os.environ.get("JARVIS_ADMIN_TOKEN")
+def _require_admin_token(x_daniel_admin_token: str | None = Header(default=None)) -> None:
+    expected = os.environ.get("DANIEL_ADMIN_TOKEN")
     if not expected:
         raise HTTPException(status_code=503, detail="Docker controls are disabled")
-    if x_jarvis_admin_token != expected:
+    if x_daniel_admin_token != expected:
         raise HTTPException(status_code=403, detail="Invalid admin token")
 
 
