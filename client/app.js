@@ -322,6 +322,11 @@ function addLog(text, type = 'cmd') {
 
 /* ── Orb / mic button handlers ───────────────────────────────────── */
 function handleOrbClick() {
+  if (!micStream) {
+    // First click: request mic permission and start always-listening
+    requestMicAndListen();
+    return;
+  }
   if (isSpeaking) return;
   if (isActive) {
     stopRecording();
@@ -353,8 +358,27 @@ async function initVisualizer() {
     analyser.fftSize = 128;
     audioCtx.createMediaStreamSource(micStream).connect(analyser);
     window._audioAnalyser = analyser;
-  } catch (_) {
-    // No mic — sphere runs in ambient mode
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function requestMicAndListen() {
+  setStatus('Activando micrófono...');
+  const ok = await initVisualizer();
+  if (ok) {
+    initSpeech();
+    setStatus('Di "Daniel" para activar');
+    // Hide the mic button hint since wake-word is active
+    const btn = document.getElementById('mic-btn');
+    if (btn) btn.title = 'Di "Daniel" o pulsa para activar';
+  } else {
+    setStatus('🎤 Permite el micrófono en el navegador');
+    // Show permission hint on the mic button
+    const btn = document.getElementById('mic-btn');
+    if (btn) { btn.style.animation = 'pulse-warn 1s ease-in-out infinite'; btn.title = 'Clic para activar micrófono'; }
+    addLog('Micrófono bloqueado — clic en el orbe para activar', 'error');
   }
 }
 
@@ -746,7 +770,16 @@ async function initVisualizer() {
    INIT
 ══════════════════════════════════════════════════════════════════ */
 connectWS();
-initVisualizer().then(() => initSpeech());
+// Try to get mic permission automatically — works if browser already allowed it.
+// If denied, user taps orb/mic button to request permission.
+(async () => {
+  const ok = await initVisualizer();
+  if (ok) {
+    initSpeech();
+  } else {
+    setStatus('🎤 Toca el orbe para activar el micrófono');
+  }
+})();
 
 /* ══════════════════════════════════════════════════════════════════
    CONTROL PANEL
