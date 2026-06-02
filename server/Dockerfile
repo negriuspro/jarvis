@@ -26,6 +26,7 @@ RUN pip install --upgrade pip \
 
 COPY server /app/server
 COPY client /app/client
+COPY devices.json /app/devices.json
 
 RUN mkdir -p /app/data/reminders
 

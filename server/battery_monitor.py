@@ -1,13 +1,10 @@
 """
 battery_monitor.py — Automatización del enchufe inteligente.
 
-Fuente de datos de batería: Computadora Principal (vía system_monitor).
-El servidor Ubuntu no tiene batería; usa exclusivamente los datos
-recibidos del agente remoto.
-
+Fuente de batería: Computadora Principal (vía system_monitor).
 Lógica:
-  batería <= LOW  → enciende enchufe (carga)
-  batería >= HIGH → apaga enchufe (protección)
+  batería <= LOW  → enciende enchufe
+  batería >= HIGH → apaga enchufe
 """
 
 import asyncio
@@ -26,65 +23,63 @@ _plug_on: bool | None = None
 
 
 async def monitor() -> None:
-    """
-    Bucle principal de monitoreo de batería.
-    Lee datos de la Computadora Principal publicados por system_monitor.
-    """
     global _plug_on
 
     if not _PLUG:
-        log.warning("[BATTERY_AUTOMATION] TUYA_PLUG_PC_ID no configurado — automatización desactivada.")
+        log.warning("[BATTERY_AUTOMATION] TUYA_PLUG_PC_ID no configurado — desactivado.")
         return
 
     log.info(
-        "[BATTERY_AUTOMATION] Iniciado — usando batería de PC principal (LOW=%d%% → ON | HIGH=%d%% → OFF)",
-        _LOW, _HIGH,
+        "[BATTERY_AUTOMATION] Iniciado — PC principal (LOW=%d%% → ON | HIGH=%d%% → OFF | PLUG=%s)",
+        _LOW, _HIGH, _PLUG,
     )
 
     while True:
         try:
-            # Importar aquí para evitar ciclo de importación en startup
             from .system_monitor import get_main_pc_battery
-
             batt = get_main_pc_battery()
 
             if batt is None or batt.get("percent") is None:
-                log.debug("[BATTERY_AUTOMATION] Sin datos de PC principal aún — esperando agente...")
+                log.info("[BATTERY_AUTOMATION] Sin datos de PC principal — esperando agente...")
                 await asyncio.sleep(60)
                 continue
 
             if not batt.get("online"):
-                log.warning(
-                    "[BATTERY_AUTOMATION] PC principal OFFLINE — automatización pausada hasta reconexión."
-                )
+                log.warning("[BATTERY_AUTOMATION] PC principal OFFLINE — pausado.")
                 await asyncio.sleep(60)
                 continue
 
             pct     = batt["percent"]
             plugged = batt.get("plugged")
 
-            # Leer estado real del enchufe (detecta cambios manuales)
+            log.info(
+                "[BATTERY_AUTOMATION] BAT:%.0f%% PLUGGED:%s _plug_on:%s",
+                pct, plugged, _plug_on,
+            )
+
+            # Leer estado real del enchufe
             actual = get_device_status(_PLUG)
             if actual is not None:
                 _plug_on = actual
+            log.info("[BATTERY_AUTOMATION] Estado real enchufe: %s", actual)
 
             if pct <= _LOW and _plug_on is not True:
-                if control_device(_PLUG, True):
+                ok = control_device(_PLUG, True)
+                if ok:
                     _plug_on = True
-                    log.info(
-                        "[BATTERY_AUTOMATION] Batería PC %.0f%% — enchufe ENCENDIDO (cargando)",
-                        pct,
-                    )
+                    log.info("[BATTERY_AUTOMATION] Batería %.0f%% — enchufe ENCENDIDO", pct)
+                else:
+                    log.warning("[BATTERY_AUTOMATION] Falló encender enchufe (bat=%.0f%%)", pct)
 
-            elif pct >= _HIGH and plugged and _plug_on is not False:
-                if control_device(_PLUG, False):
+            elif pct >= _HIGH and _plug_on is not False:
+                ok = control_device(_PLUG, False)
+                if ok:
                     _plug_on = False
-                    log.info(
-                        "[BATTERY_AUTOMATION] Batería PC %.0f%% — enchufe APAGADO (protección batería)",
-                        pct,
-                    )
+                    log.info("[BATTERY_AUTOMATION] Batería %.0f%% — enchufe APAGADO", pct)
+                else:
+                    log.warning("[BATTERY_AUTOMATION] Falló apagar enchufe (bat=%.0f%%)", pct)
 
         except Exception as e:
-            log.error("[BATTERY_AUTOMATION] Error en monitor: %s", e)
+            log.error("[BATTERY_AUTOMATION] Error: %s", e, exc_info=True)
 
         await asyncio.sleep(60)
