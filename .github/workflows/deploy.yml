@@ -1,0 +1,43 @@
+name: Deploy asistente-daniel
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to angel-server
+    runs-on: [self-hosted, linux, asistente-daniel]
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Deploy
+        id: deploy
+        run: bash /home/angel/deploy/deploy-asistente-daniel.sh
+
+      - name: Verify containers
+        if: always()
+        run: |
+          echo "--- Estado de contenedores ---"
+          docker ps --filter name=asistente-daniel --format "table {{.Names}}	{{.Status}}	{{.Ports}}"
+
+      - name: Health check final
+        run: |
+          sleep 3
+          if nc -z 127.0.0.1 3002 2>/dev/null; then
+            echo "OK — Puerto :3002 responde"
+          else
+            echo "WARN — Puerto :3002 no responde (puede ser normal en hairpin NAT)"
+          fi
+
+      - name: Deploy log (ultimas lineas)
+        if: always()
+        run: tail -20 /home/angel/deploy/deploy.log || true
