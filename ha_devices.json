@@ -5,11 +5,11 @@
   "ac_scenes": {
     "frio": "scene.modo_frio",
     "viento": "scene.modo_viento",
-    "dormir": "scene.modo_dormir",
-    "off": "scene.off_aire"
+    "deshumidificador": "scene.deshumidificador",
+    "off": "scene.apagar_aire"
   },
   "led_scenes": {
-    "on": "scene.luz_led_encender",
+    "on": "scene.encender_luz_led",
     "off": "scene.apagar_luz_led"
   }
 }

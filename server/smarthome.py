@@ -25,8 +25,13 @@ _AC_MODES = {
     "ventilacion": "viento",
     "ventilación": "viento",
     "fan": "viento",
-    "dormir": "dormir",
-    "sleep": "dormir",
+    "deshumidificador": "deshumidificador",
+    "deshumidificar": "deshumidificador",
+    "seco": "deshumidificador",
+    "dry": "deshumidificador",
+    "dehumidify": "deshumidificador",
+    "dormir": "deshumidificador",
+    "sleep": "deshumidificador",
 }
 
 _ON_WORDS = {"on", "encender", "encendido", "prender", "activar"}
