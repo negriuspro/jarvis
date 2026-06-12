@@ -2,6 +2,7 @@
 Daniel AI Assistant — Interactive setup wizard.
 Run: python -m server.setup_wizard  (from the project root)
 """
+
 import os
 import sys
 from pathlib import Path
@@ -47,17 +48,17 @@ _STEPS = [
         "required": False,
     },
     {
-        "key": "TUYA_ACCESS_ID",
-        "label": "Tuya Access ID (smart home — opcional)",
-        "help": "Obtén tus credenciales en: https://iot.tuya.com",
+        "key": "HA_URL",
+        "label": "Home Assistant URL (smart home — opcional)",
+        "help": "Ej: http://homeassistant:8123 (o IP del servidor:8123)",
         "required": False,
     },
     {
-        "key": "TUYA_ACCESS_SECRET",
-        "label": "Tuya Access Secret",
-        "help": "Del mismo panel de Tuya IoT",
+        "key": "HA_TOKEN",
+        "label": "Home Assistant Long-Lived Access Token",
+        "help": "Generar en HA: Perfil → Seguridad → Tokens de acceso de larga duración",
         "required": False,
-        "depends_on": "TUYA_ACCESS_ID",
+        "depends_on": "HA_URL",
     },
 ]
 
@@ -127,7 +128,9 @@ def run_wizard() -> None:
         if val:
             updates[key] = val
         elif not current_val and required:
-            print("  ⚠ Esta clave es requerida. Puedes agregarla manualmente en el archivo .env")
+            print(
+                "  ⚠ Esta clave es requerida. Puedes agregarla manualmente en el archivo .env"
+            )
             skipped.add(key)
         elif not current_val:
             skipped.add(key)

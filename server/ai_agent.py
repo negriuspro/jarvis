@@ -56,7 +56,7 @@ ACCIONES DISPONIBLES:
 - wait: {"ms": N}
 - system_control: {"command": "volume_up/volume_down/mute/lock/shutdown/restart/suspend/screenshot", "value": N}
 - smart_home: {"device": "nombre", "action": "on/off"}
-- ac_control: {"device": "aire acondicionado", "power": "on/off", "temp": 16-30, "mode": "frio/calor/auto/ventilacion/seco", "fan": "auto/bajo/medio/alto"}
+- ac_control: {"device": "aire acondicionado", "power": "on/off", "mode": "frio/viento/dormir"}
 - tv_control: {"command": "volume_up/volume_down/mute/volume_set/pause/play/stop/off/status", "value": "N"}
 - google_home: {"command": "volume_up/volume_down/mute/volume_set/pause/play/stop/youtube/spotify/status", "value": "N"}
 - spotify_control: {"action": "play/pause/next/prev/search/volume/now_playing", "query": "canción o artista", "volume": 0-100}
@@ -551,9 +551,7 @@ async def process(text: str) -> str:
                 ac_control,
                 params.get("device", "aire acondicionado"),
                 params.get("power", ""),
-                int(params.get("temp", 0)),
                 params.get("mode", ""),
-                params.get("fan", ""),
             )
 
         elif action == "web_search":

@@ -15,9 +15,9 @@ from .smarthome import control_device, get_device_status
 
 log = logging.getLogger("daniel.battery")
 
-_LOW  = int(os.environ.get("BATTERY_LOW",  "20"))
+_LOW = int(os.environ.get("BATTERY_LOW", "20"))
 _HIGH = int(os.environ.get("BATTERY_HIGH", "80"))
-_PLUG = os.environ.get("TUYA_PLUG_PC_ID", "")
+_PLUG = os.environ.get("HA_PLUG_ENTITY_ID", "")
 
 _plug_on: bool | None = None
 
@@ -26,21 +26,28 @@ async def monitor() -> None:
     global _plug_on
 
     if not _PLUG:
-        log.warning("[BATTERY_AUTOMATION] TUYA_PLUG_PC_ID no configurado — desactivado.")
+        log.warning(
+            "[BATTERY_AUTOMATION] HA_PLUG_ENTITY_ID no configurado — desactivado."
+        )
         return
 
     log.info(
         "[BATTERY_AUTOMATION] Iniciado — PC principal (LOW=%d%% → ON | HIGH=%d%% → OFF | PLUG=%s)",
-        _LOW, _HIGH, _PLUG,
+        _LOW,
+        _HIGH,
+        _PLUG,
     )
 
     while True:
         try:
             from .system_monitor import get_main_pc_battery
+
             batt = get_main_pc_battery()
 
             if batt is None or batt.get("percent") is None:
-                log.info("[BATTERY_AUTOMATION] Sin datos de PC principal — esperando agente...")
+                log.info(
+                    "[BATTERY_AUTOMATION] Sin datos de PC principal — esperando agente..."
+                )
                 await asyncio.sleep(60)
                 continue
 
@@ -49,12 +56,14 @@ async def monitor() -> None:
                 await asyncio.sleep(60)
                 continue
 
-            pct     = batt["percent"]
+            pct = batt["percent"]
             plugged = batt.get("plugged")
 
             log.info(
                 "[BATTERY_AUTOMATION] BAT:%.0f%% PLUGGED:%s _plug_on:%s",
-                pct, plugged, _plug_on,
+                pct,
+                plugged,
+                _plug_on,
             )
 
             # Leer estado real del enchufe
@@ -67,17 +76,25 @@ async def monitor() -> None:
                 ok = control_device(_PLUG, True)
                 if ok:
                     _plug_on = True
-                    log.info("[BATTERY_AUTOMATION] Batería %.0f%% — enchufe ENCENDIDO", pct)
+                    log.info(
+                        "[BATTERY_AUTOMATION] Batería %.0f%% — enchufe ENCENDIDO", pct
+                    )
                 else:
-                    log.warning("[BATTERY_AUTOMATION] Falló encender enchufe (bat=%.0f%%)", pct)
+                    log.warning(
+                        "[BATTERY_AUTOMATION] Falló encender enchufe (bat=%.0f%%)", pct
+                    )
 
             elif pct >= _HIGH and _plug_on is not False:
                 ok = control_device(_PLUG, False)
                 if ok:
                     _plug_on = False
-                    log.info("[BATTERY_AUTOMATION] Batería %.0f%% — enchufe APAGADO", pct)
+                    log.info(
+                        "[BATTERY_AUTOMATION] Batería %.0f%% — enchufe APAGADO", pct
+                    )
                 else:
-                    log.warning("[BATTERY_AUTOMATION] Falló apagar enchufe (bat=%.0f%%)", pct)
+                    log.warning(
+                        "[BATTERY_AUTOMATION] Falló apagar enchufe (bat=%.0f%%)", pct
+                    )
 
         except Exception as e:
             log.error("[BATTERY_AUTOMATION] Error: %s", e, exc_info=True)

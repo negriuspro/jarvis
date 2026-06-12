@@ -1,0 +1,15 @@
+{
+  "devices": [
+    { "id": "switch.enchufe_pc_enchufe_1", "name": "Enchufe PC" }
+  ],
+  "ac_scenes": {
+    "frio": "scene.modo_frio",
+    "viento": "scene.modo_viento",
+    "dormir": "scene.modo_dormir",
+    "off": "scene.off_aire"
+  },
+  "led_scenes": {
+    "on": "scene.luz_led_encender",
+    "off": "scene.apagar_luz_led"
+  }
+}
