@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
     private var speechRecognizer: SpeechRecognizer? = null
     private val handler = Handler(Looper.getMainLooper())
 
-    // ← IP de tu PC en la red WiFi
-    private val SERVER_URL = "http://192.168.100.52:8000"
+    // Gateway nginx de Daniel en el servidor Ubuntu (docker-compose: APP_PORT -> :80 -> /api,/ws)
+    private val SERVER_URL = "http://192.168.100.6:3002"
 
     private val PERMS     = arrayOf(Manifest.permission.RECORD_AUDIO)
     private val PERM_CODE = 1001

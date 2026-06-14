@@ -224,6 +224,10 @@ function activate() {
   if (shouldRecordOnPC() && ws && ws.readyState === WebSocket.OPEN) {
     ws.send('__activate__');
     activeTimer = setTimeout(() => deactivate(), ACTIVE_MS + 3000);
+  } else if (window.ANDROID_NATIVE) {
+    // El STT nativo despacha via onNativeResult/dispatch; si no llega
+    // un resultado final a tiempo, evita que isActive quede atascado.
+    activeTimer = setTimeout(() => deactivate(), ACTIVE_MS);
   } else {
     startRecording();
     activeTimer = setTimeout(() => stopRecording(), ACTIVE_MS);
@@ -257,8 +261,15 @@ function handleTranscript(text, isFinal) {
   const lower = text.toLowerCase();
   if (!isActive && !isSpeaking && WAKE_WORDS.some(w => lower.includes(w))) activate();
   if (isActive && isFinal) {
-    if (typeof MediaRecorder !== 'undefined' && !shouldRecordOnPC()) stopRecording();
-    else if (!shouldRecordOnPC()) {
+    // Android nativo: el texto ya viene transcrito por el STT del sistema,
+    // se despacha directo sin pasar por MediaRecorder/Whisper.
+    if (window.ANDROID_NATIVE) {
+      const cmd = stripWake(text);
+      if (cmd) dispatch(cmd);
+      else deactivate();
+    } else if (typeof MediaRecorder !== 'undefined' && !shouldRecordOnPC()) {
+      stopRecording();
+    } else if (!shouldRecordOnPC()) {
       const cmd = stripWake(text);
       if (cmd) dispatch(cmd);
       else deactivate();

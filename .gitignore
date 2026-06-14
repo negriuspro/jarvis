@@ -19,6 +19,10 @@ dist/
 android/.gradle/
 android/build/
 android/app/build/
+android/JarvisApp/.gradle/
+android/JarvisApp/build/
+android/JarvisApp/app/build/
+android/JarvisApp/local.properties
 *.apk
 *.aab
 
